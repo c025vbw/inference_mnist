@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:15.3-alpine
+    container_name: db #コンテナ名をdbに設定(例:docker exec -it db psql -U admin -d mobile_mnist_db)
+    environment:
+      - POSTGRES_DB=mobile_mnist_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  backend:
+    image: python:3.12
+    container_name: backend #コンテナ名をbackendに設定(例:docker exec -it django_app bash)
+    working_dir: /app #コンテナ内の作業ディレクトリを/appに設定
+    volumes: #ホスト側の./backendディレクトリを、コンテナ内の/appにマウント。ローカルで変更したコードがコンテナに反映される
+      - ./backend/mnistproject:/app
+    ports: #ホスト側の8000ポートを、コンテナ内の8000ポートに対応させる(例:http://localhost:8000)でDjangoにアクセス可能
+      - "8000:8000"
+    environment:
+      - DB_NAME=mobile_mnist_db
+      - DB_USER=admin
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=5432
+    command: >
+      sh -c "pip install -r requirements.txt && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on: #dbコンテナが起動してからbackendコンテナを起動する
+      - db
+
+volumes:
+  postgres_data:

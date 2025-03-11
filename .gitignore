@@ -1,0 +1,26 @@
+# Python
+*.pyc
+__pycache__/
+
+# Virtual Environment
+mnistenv/
+env/
+
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+
+# VS Code
+.vscode/
+
+# Docker
+*.log
+*.pid
+*.seed
+*.pid.lock
+*.env
+docker-compose.override.yml
