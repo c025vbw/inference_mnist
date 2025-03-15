@@ -1,2 +1,5 @@
-Django>=3.2,<4.0
-psycopg2-binary>=2.8
+Django>=4.2       
+numpy>=1.26.0     
+torch==2.5.0    # 2020年リリース、セキュリティリスクあり
+torchvision==0.20.0 # 2020年リリース
+pillow==7.0.0  
