@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/frontend" # `/frontend`ディレクトリの設定
+    schedule:
+      interval: "daily" # 毎月のアップデート
+
+  - package-ecosystem: "pip" # pipを使用している場合
+    directory: "/backend" # `/backend`ディレクトリの設定
+    schedule:
+      interval: "daily" # 毎日のアップデート
